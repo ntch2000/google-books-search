@@ -1,6 +1,9 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
+const path = require("path");
+
+// creates instance of express
+const app = express();
 
 // create port
 const PORT = process.env.PORT || 3001;
@@ -8,6 +11,9 @@ const PORT = process.env.PORT || 3001;
 // Middleware code
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// serves up static client/build files
+app.use(express.static("client/build"));
 
 //mongoose connection
 mongoose.connect(
@@ -37,6 +43,11 @@ app.get("/api/config", (req, res) => {
   res.json({
     success: true,
   });
+});
+
+// serves up static html file if no routes match
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
 // listen on port
