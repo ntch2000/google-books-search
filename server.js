@@ -20,7 +20,7 @@ mongoose.connect(
   }
 );
 
-const connection = mongoose.connect;
+const connection = mongoose.connection;
 
 // successful connection event listener
 connection.on("connected", () => {
@@ -33,7 +33,7 @@ connection.on("error", (err) => {
 });
 
 //create config route
-app.get("./api/config", (req, res) => {
+app.get("/api/config", (req, res) => {
   res.json({
     success: true,
   });
@@ -41,5 +41,5 @@ app.get("./api/config", (req, res) => {
 
 // listen on port
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
